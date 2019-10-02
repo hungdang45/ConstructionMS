@@ -6,11 +6,16 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using ConstructionMS.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ConstructionMS
 {
     public partial class Startup
     {
+       
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -54,9 +59,9 @@ namespace ConstructionMS
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "423391851627077",
+               appSecret: "2d6f9177073d42912825fd20646663c9");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
@@ -64,5 +69,7 @@ namespace ConstructionMS
             //    ClientSecret = ""
             //});
         }
+
+    
     }
 }
