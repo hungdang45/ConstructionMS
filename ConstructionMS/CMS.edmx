@@ -20,6 +20,7 @@
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="70" />
+          <Property Name="ManagerID" Type="int" />
         </EntityType>
         <EntityType Name="CategoryType">
           <Key>
@@ -198,6 +199,18 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Principal>
             <Dependent Role="Blog">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ManagerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -478,6 +491,10 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             <End Role="Category" EntitySet="Category" />
             <End Role="Blog" EntitySet="Blog" />
           </AssociationSet>
+          <AssociationSet Name="FK_Category_Manager" Association="Self.FK_Category_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
           <AssociationSet Name="FK_CategoryType_Category" Association="Self.FK_CategoryType_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryType" EntitySet="CategoryType" />
@@ -573,6 +590,8 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <Property Name="CategoryName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Blogs" Relationship="Self.FK_Blog_Category" FromRole="Category" ToRole="Blog" />
           <NavigationProperty Name="CategoryTypes" Relationship="Self.FK_CategoryType_Category" FromRole="Category" ToRole="CategoryType" />
+          <Property Name="ManagerID" Type="Int32" />
+          <NavigationProperty Name="Manager" Relationship="CMSModel.FK_Category_Manager" FromRole="Category" ToRole="Manager" />
         </EntityType>
         <EntityType Name="CategoryType">
           <Key>
@@ -630,6 +649,7 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipt_Manager" FromRole="Manager" ToRole="Receipt" />
           <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Manager" FromRole="Manager" ToRole="Report" />
           <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Manager" FromRole="Manager" ToRole="Staff" />
+          <NavigationProperty Name="Categories" Relationship="CMSModel.FK_Category_Manager" FromRole="Manager" ToRole="Category" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1016,6 +1036,10 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             <End Role="Order" EntitySet="Orders" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Category_Manager" Association="CMSModel.FK_Category_Manager">
+            <End Role="Manager" EntitySet="Managers" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1070,6 +1094,18 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <End Type="CMSModel.Order" Role="Order" Multiplicity="*" />
           <End Type="CMSModel.Product" Role="Product" Multiplicity="*" />
         </Association>
+        <Association Name="FK_Category_Manager">
+          <End Type="CMSModel.Manager" Role="Manager" Multiplicity="0..1" />
+          <End Type="CMSModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1089,6 +1125,7 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="CMSModel.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </MappingFragment>

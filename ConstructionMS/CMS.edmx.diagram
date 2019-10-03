@@ -38,6 +38,7 @@
         <AssociationConnector Association="CMSModel.FK_ProductReceiptDetail_Receipt" />
         <AssociationConnector Association="CMSModel.ProductColorDetail" />
         <AssociationConnector Association="CMSModel.ProductOrderDetail" />
+        <AssociationConnector Association="CMSModel.FK_Category_Manager" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
