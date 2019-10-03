@@ -15,16 +15,25 @@ namespace ConstructionMS.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Giới thiệu CMS.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Thông tin liên hệ ";
 
             return View();
         }
+
+        [Authorize(Roles = "Manager")]
+        public ActionResult Manager()
+        {
+
+
+            return View();
+        }
+
     }
 }

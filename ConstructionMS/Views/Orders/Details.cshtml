@@ -1,0 +1,74 @@
+﻿@model ConstructionMS.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Guest.GuestName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Guest.GuestName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Receipt.ReceiptName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receipt.ReceiptName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Staff.StaffName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Staff.StaffName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
