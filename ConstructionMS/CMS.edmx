@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Blog">
           <Key>
             <PropertyRef Name="BlogID" />
@@ -92,13 +92,14 @@
           <Property Name="Description" Type="nvarchar" MaxLength="80" />
           <Property Name="Price" Type="float" />
           <Property Name="ProductCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="ProductImage" Type="nvarchar" MaxLength="100" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Height" Type="nvarchar" MaxLength="50" />
           <Property Name="CategoryTypeID" Type="int" />
           <Property Name="ManagerID" Type="int" />
           <Property Name="Material" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductImage" Type="image" />
+          <Property Name="ImageUpload" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="ProductColorDetail">
           <Key>
@@ -298,6 +299,18 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductColorDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductColorDetail" Type="Self.ProductColorDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductColorDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductColorMapping_Color">
           <End Role="Color" Type="Self.Color" Multiplicity="1" />
           <End Role="ProductColorDetail" Type="Self.ProductColorDetail" Multiplicity="*" />
@@ -310,26 +323,14 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductColorMapping_Product">
+        <Association Name="FK_ProductOrderDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProductColorDetail" Type="Self.ProductColorDetail" Multiplicity="*" />
+          <End Role="ProductOrderDetail" Type="Self.ProductOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="ProductColorDetail">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductInvoiceMapping_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProductReceiptDetail" Type="Self.ProductReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="ProductReceiptDetail">
+            <Dependent Role="ProductOrderDetail">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -346,14 +347,14 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductOrderMapping_Product">
+        <Association Name="FK_ProductReceiptDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProductOrderDetail" Type="Self.ProductOrderDetail" Multiplicity="*" />
+          <End Role="ProductReceiptDetail" Type="Self.ProductReceiptDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="ProductOrderDetail">
+            <Dependent Role="ProductReceiptDetail">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -523,25 +524,25 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             <End Role="Manager" EntitySet="Manager" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductColorDetail_Product" Association="Self.FK_ProductColorDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductColorDetail" EntitySet="ProductColorDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductColorMapping_Color" Association="Self.FK_ProductColorMapping_Color">
             <End Role="Color" EntitySet="Color" />
             <End Role="ProductColorDetail" EntitySet="ProductColorDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductColorMapping_Product" Association="Self.FK_ProductColorMapping_Product">
+          <AssociationSet Name="FK_ProductOrderDetail_Product" Association="Self.FK_ProductOrderDetail_Product">
             <End Role="Product" EntitySet="Product" />
-            <End Role="ProductColorDetail" EntitySet="ProductColorDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductInvoiceMapping_Product" Association="Self.FK_ProductInvoiceMapping_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductReceiptDetail" EntitySet="ProductReceiptDetail" />
+            <End Role="ProductOrderDetail" EntitySet="ProductOrderDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductOrderMapping_Order" Association="Self.FK_ProductOrderMapping_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="ProductOrderDetail" EntitySet="ProductOrderDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductOrderMapping_Product" Association="Self.FK_ProductOrderMapping_Product">
+          <AssociationSet Name="FK_ProductReceiptDetail_Product" Association="Self.FK_ProductReceiptDetail_Product">
             <End Role="Product" EntitySet="Product" />
-            <End Role="ProductOrderDetail" EntitySet="ProductOrderDetail" />
+            <End Role="ProductReceiptDetail" EntitySet="ProductReceiptDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductReceiptDetail_Receipt" Association="Self.FK_ProductReceiptDetail_Receipt">
             <End Role="Receipt" EntitySet="Receipt" />
@@ -568,7 +569,8 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             <End Role="Staff" EntitySet="Staff" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -588,10 +590,10 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Blogs" Relationship="Self.FK_Blog_Category" FromRole="Category" ToRole="Blog" />
-          <NavigationProperty Name="CategoryTypes" Relationship="Self.FK_CategoryType_Category" FromRole="Category" ToRole="CategoryType" />
           <Property Name="ManagerID" Type="Int32" />
-          <NavigationProperty Name="Manager" Relationship="CMSModel.FK_Category_Manager" FromRole="Category" ToRole="Manager" />
+          <NavigationProperty Name="Blogs" Relationship="Self.FK_Blog_Category" FromRole="Category" ToRole="Blog" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK_Category_Manager" FromRole="Category" ToRole="Manager" />
+          <NavigationProperty Name="CategoryTypes" Relationship="Self.FK_CategoryType_Category" FromRole="Category" ToRole="CategoryType" />
         </EntityType>
         <EntityType Name="CategoryType">
           <Key>
@@ -609,7 +611,7 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           </Key>
           <Property Name="ColorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ColorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="CMSModel.ProductColorDetail" FromRole="Color" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="Self.ProductColorDetail" FromRole="Color" ToRole="Product" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -645,11 +647,11 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Category_Manager" FromRole="Manager" ToRole="Category" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_Manager" FromRole="Manager" ToRole="Product" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipt_Manager" FromRole="Manager" ToRole="Receipt" />
           <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Manager" FromRole="Manager" ToRole="Report" />
           <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Manager" FromRole="Manager" ToRole="Staff" />
-          <NavigationProperty Name="Categories" Relationship="CMSModel.FK_Category_Manager" FromRole="Manager" ToRole="Category" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -666,7 +668,7 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <NavigationProperty Name="Guest" Relationship="Self.FK_Order_Guest" FromRole="Order" ToRole="Guest" />
           <NavigationProperty Name="Receipt" Relationship="Self.FK_Order_Receipt" FromRole="Order" ToRole="Receipt" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_Order_Staff" FromRole="Order" ToRole="Staff" />
-          <NavigationProperty Name="Products" Relationship="CMSModel.ProductOrderDetail" FromRole="Order" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="Self.ProductOrderDetail" FromRole="Order" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -679,19 +681,30 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <Property Name="Description" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
           <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProductImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Height" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CategoryTypeID" Type="Int32" />
           <Property Name="ManagerID" Type="Int32" />
           <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageUpload" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="CategoryType" Relationship="Self.FK_Product_CategoryType" FromRole="Product" ToRole="CategoryType" />
           <NavigationProperty Name="Manager" Relationship="Self.FK_Product_Manager" FromRole="Product" ToRole="Manager" />
+          <NavigationProperty Name="ProductReceiptDetails" Relationship="Self.FK_ProductReceiptDetail_Product" FromRole="Product" ToRole="ProductReceiptDetail" />
           <NavigationProperty Name="Promotions" Relationship="Self.FK_Promotion_Product" FromRole="Product" ToRole="Promotion" />
-          <NavigationProperty Name="ProductReceiptDetails" Relationship="CMSModel.FK_ProductInvoiceMapping_Product" FromRole="Product" ToRole="ProductReceiptDetail" />
-          <NavigationProperty Name="Colors" Relationship="CMSModel.ProductColorDetail" FromRole="Product" ToRole="Color" />
-          <NavigationProperty Name="Orders" Relationship="CMSModel.ProductOrderDetail" FromRole="Product" ToRole="Order" />
+          <NavigationProperty Name="Colors" Relationship="Self.ProductColorDetail" FromRole="Product" ToRole="Color" />
+          <NavigationProperty Name="Orders" Relationship="Self.ProductOrderDetail" FromRole="Product" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ProductReceiptDetail">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ReceiptID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ReceiptID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductReceiptDetail_Product" FromRole="ProductReceiptDetail" ToRole="Product" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK_ProductReceiptDetail_Receipt" FromRole="ProductReceiptDetail" ToRole="Receipt" />
         </EntityType>
         <EntityType Name="Promotion">
           <Key>
@@ -721,7 +734,7 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <NavigationProperty Name="Guest" Relationship="Self.FK_Receipt_Guest" FromRole="Receipt" ToRole="Guest" />
           <NavigationProperty Name="Manager" Relationship="Self.FK_Receipt_Manager" FromRole="Receipt" ToRole="Manager" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Receipt" FromRole="Receipt" ToRole="Order" />
-          <NavigationProperty Name="ProductReceiptDetails" Relationship="CMSModel.FK_ProductReceiptDetail_Receipt" FromRole="Receipt" ToRole="ProductReceiptDetail" />
+          <NavigationProperty Name="ProductReceiptDetails" Relationship="Self.FK_ProductReceiptDetail_Receipt" FromRole="Receipt" ToRole="ProductReceiptDetail" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -774,6 +787,18 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Principal>
             <Dependent Role="Blog">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ManagerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -909,6 +934,18 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductReceiptDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductReceiptDetail" Type="Self.ProductReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductReceiptDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Promotion_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="Promotion" Type="Self.Promotion" Multiplicity="*" />
@@ -921,6 +958,26 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductReceiptDetail_Receipt">
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="ProductReceiptDetail" Type="Self.ProductReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="ReceiptID" />
+            </Principal>
+            <Dependent Role="ProductReceiptDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductColorDetail">
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Color" Type="Self.Color" Multiplicity="*" />
+        </Association>
+        <Association Name="ProductOrderDetail">
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="CMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Blogs" EntityType="Self.Blog" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
@@ -931,6 +988,7 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <EntitySet Name="Managers" EntityType="Self.Manager" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductReceiptDetails" EntityType="Self.ProductReceiptDetail" />
           <EntitySet Name="Promotions" EntityType="Self.Promotion" />
           <EntitySet Name="Receipts" EntityType="Self.Receipt" />
           <EntitySet Name="Reports" EntityType="Self.Report" />
@@ -940,6 +998,10 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <AssociationSet Name="FK_Blog_Category" Association="Self.FK_Blog_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Blog" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Manager" Association="Self.FK_Category_Manager">
+            <End Role="Manager" EntitySet="Managers" />
+            <End Role="Category" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_CategoryType_Category" Association="Self.FK_CategoryType_Category">
             <End Role="Category" EntitySet="Categories" />
@@ -985,9 +1047,25 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             <End Role="Staff" EntitySet="Staffs" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductReceiptDetail_Product" Association="Self.FK_ProductReceiptDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductReceiptDetail" EntitySet="ProductReceiptDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Promotion_Product" Association="Self.FK_Promotion_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="Promotion" EntitySet="Promotions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductReceiptDetail_Receipt" Association="Self.FK_ProductReceiptDetail_Receipt">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="ProductReceiptDetail" EntitySet="ProductReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="ProductColorDetail" Association="Self.ProductColorDetail">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Color" EntitySet="Colors" />
+          </AssociationSet>
+          <AssociationSet Name="ProductOrderDetail" Association="Self.ProductOrderDetail">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1019,27 +1097,6 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="ProductReceiptDetails" EntityType="CMSModel.ProductReceiptDetail" />
-          <AssociationSet Name="FK_ProductInvoiceMapping_Product" Association="CMSModel.FK_ProductInvoiceMapping_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="ProductReceiptDetail" EntitySet="ProductReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductReceiptDetail_Receipt" Association="CMSModel.FK_ProductReceiptDetail_Receipt">
-            <End Role="Receipt" EntitySet="Receipts" />
-            <End Role="ProductReceiptDetail" EntitySet="ProductReceiptDetails" />
-          </AssociationSet>
-          <AssociationSet Name="ProductColorDetail" Association="CMSModel.ProductColorDetail">
-            <End Role="Color" EntitySet="Colors" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="ProductOrderDetail" Association="CMSModel.ProductOrderDetail">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Category_Manager" Association="CMSModel.FK_Category_Manager">
-            <End Role="Manager" EntitySet="Managers" />
-            <End Role="Category" EntitySet="Categories" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1052,60 +1109,6 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="ProductReceiptDetail">
-          <Key>
-            <PropertyRef Name="ProductID" />
-            <PropertyRef Name="ReceiptID" />
-          </Key>
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="ReceiptID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="CMSModel.FK_ProductInvoiceMapping_Product" FromRole="ProductReceiptDetail" ToRole="Product" />
-          <NavigationProperty Name="Receipt" Relationship="CMSModel.FK_ProductReceiptDetail_Receipt" FromRole="ProductReceiptDetail" ToRole="Receipt" />
-        </EntityType>
-        <Association Name="FK_ProductInvoiceMapping_Product">
-          <End Type="CMSModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="CMSModel.ProductReceiptDetail" Role="ProductReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="ProductReceiptDetail">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductReceiptDetail_Receipt">
-          <End Type="CMSModel.Receipt" Role="Receipt" Multiplicity="1" />
-          <End Type="CMSModel.ProductReceiptDetail" Role="ProductReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Receipt">
-              <PropertyRef Name="ReceiptID" />
-            </Principal>
-            <Dependent Role="ProductReceiptDetail">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ProductColorDetail">
-          <End Type="CMSModel.Color" Role="Color" Multiplicity="*" />
-          <End Type="CMSModel.Product" Role="Product" Multiplicity="*" />
-        </Association>
-        <Association Name="ProductOrderDetail">
-          <End Type="CMSModel.Order" Role="Order" Multiplicity="*" />
-          <End Type="CMSModel.Product" Role="Product" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_Category_Manager">
-          <End Type="CMSModel.Manager" Role="Manager" Multiplicity="0..1" />
-          <End Type="CMSModel.Category" Role="Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manager">
-              <PropertyRef Name="ManagerID" />
-            </Principal>
-            <Dependent Role="Category">
-              <PropertyRef Name="ManagerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1125,9 +1128,9 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="CMSModel.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1206,13 +1209,22 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
                 <ScalarProperty Name="CategoryTypeID" ColumnName="CategoryTypeID" />
                 <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ImageUpload" ColumnName="ImageUpload" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductReceiptDetails">
+            <EntityTypeMapping TypeName="CMSModel.ProductReceiptDetail">
+              <MappingFragment StoreEntitySet="ProductReceiptDetail">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ReceiptID" ColumnName="ReceiptID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1285,6 +1297,22 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="ProductColorDetail" TypeName="CMSModel.ProductColorDetail" StoreEntitySet="ProductColorDetail">
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+            <EndProperty Name="Color">
+              <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ProductOrderDetail" TypeName="CMSModel.ProductOrderDetail" StoreEntitySet="ProductOrderDetail">
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+            <EndProperty Name="Order">
+              <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+            </EndProperty>
+          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="CMSModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="CMSModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="CMSModel.Store.sp_dropdiagram" />
@@ -1309,30 +1337,6 @@ warning 6002: The table/view 'CMS.dbo.View_1' does not have a primary key define
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CMSModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CMSModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="ProductReceiptDetails">
-            <EntityTypeMapping TypeName="CMSModel.ProductReceiptDetail">
-              <MappingFragment StoreEntitySet="ProductReceiptDetail">
-                <ScalarProperty Name="ReceiptID" ColumnName="ReceiptID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="ProductColorDetail" TypeName="CMSModel.ProductColorDetail" StoreEntitySet="ProductColorDetail">
-            <EndProperty Name="Product">
-              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-            </EndProperty>
-            <EndProperty Name="Color">
-              <ScalarProperty Name="ColorID" ColumnName="ColorID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="ProductOrderDetail" TypeName="CMSModel.ProductOrderDetail" StoreEntitySet="ProductOrderDetail">
-            <EndProperty Name="Product">
-              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-            </EndProperty>
-            <EndProperty Name="Order">
-              <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

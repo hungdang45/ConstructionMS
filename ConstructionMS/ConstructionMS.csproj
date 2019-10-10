@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CategoryTypesController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\GuestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -751,13 +752,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <EntityDeploy Include="CMS.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CMS.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="CMS.edmx.diagram">
-      <DependentUpon>CMS.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -818,6 +812,13 @@
     <Content Include="Content\admin\concept-master\assets\vendor\summernote\editor-fonts\summernote4c4d.woff" />
     <Content Include="Content\admin\concept-master\assets\vendor\summernote\editor-fonts\summernoted41d.eot" />
     <Content Include="Content\admin\concept-master\README.md" />
+    <EntityDeploy Include="CMS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CMS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="CMS.edmx.diagram">
+      <DependentUpon>CMS.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2457,7 +2458,9 @@
     <Content Include="Content\admin\startbootstrap-sb-admin-2-gh-pages\vendor\jquery\jquery.min.js" />
     <Content Include="Content\admin\startbootstrap-sb-admin-2-gh-pages\vendor\jquery\jquery.slim.js" />
     <Content Include="Content\admin\startbootstrap-sb-admin-2-gh-pages\vendor\jquery\jquery.slim.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2720,6 +2723,11 @@
     <Content Include="Views\Reports\Edit.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Home\Index2.cshtml" />
+    <Content Include="Views\CategoryTypes\Create.cshtml" />
+    <Content Include="Views\CategoryTypes\Delete.cshtml" />
+    <Content Include="Views\CategoryTypes\Details.cshtml" />
+    <Content Include="Views\CategoryTypes\Edit.cshtml" />
+    <Content Include="Views\CategoryTypes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

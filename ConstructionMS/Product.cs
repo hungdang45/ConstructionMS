@@ -17,8 +17,8 @@ namespace ConstructionMS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.Promotions = new HashSet<Promotion>();
             this.ProductReceiptDetails = new HashSet<ProductReceiptDetail>();
+            this.Promotions = new HashSet<Promotion>();
             this.Colors = new HashSet<Color>();
             this.Orders = new HashSet<Order>();
         }
@@ -30,20 +30,21 @@ namespace ConstructionMS
         public string Description { get; set; }
         public Nullable<double> Price { get; set; }
         public string ProductCode { get; set; }
-        public string ProductImage { get; set; }
         public Nullable<int> Quantity { get; set; }
         public string Status { get; set; }
         public string Height { get; set; }
         public Nullable<int> CategoryTypeID { get; set; }
         public Nullable<int> ManagerID { get; set; }
         public string Material { get; set; }
+        public byte[] ProductImage { get; set; }
+        public byte[] ImageUpload { get; set; }
     
         public virtual CategoryType CategoryType { get; set; }
         public virtual Manager Manager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Promotion> Promotions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductReceiptDetail> ProductReceiptDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Promotion> Promotions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Color> Colors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
