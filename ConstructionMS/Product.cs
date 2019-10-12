@@ -38,7 +38,9 @@ namespace ConstructionMS
         public string Material { get; set; }
         public byte[] ProductImage { get; set; }
         public byte[] ImageUpload { get; set; }
-    
+
+        public String Image { get; set; }
+
         public virtual CategoryType CategoryType { get; set; }
         public virtual Manager Manager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

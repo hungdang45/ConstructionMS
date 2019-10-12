@@ -2730,11 +2730,13 @@
     <Content Include="Views\CategoryTypes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\uploads\" />
+    <Folder Include="Content\Uploads\" />
     <Folder Include="Controllers\Manager\" />
     <Folder Include="Views\Category\" />
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Guest\" />
+    <Folder Include="Views\Img\" />
     <Folder Include="Views\Manager\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\Product\" />
