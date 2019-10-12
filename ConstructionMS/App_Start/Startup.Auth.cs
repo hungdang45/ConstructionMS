@@ -59,9 +59,9 @@ namespace ConstructionMS
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "423391851627077",
-               appSecret: "2d6f9177073d42912825fd20646663c9");
+            //app.UseFacebookAuthentication(
+            //   appId: "423391851627077",
+            //   appSecret: "2d6f9177073d42912825fd20646663c9");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

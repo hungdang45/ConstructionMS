@@ -36,13 +36,13 @@ namespace ConstructionMS
         public virtual DbSet<Manager> Managers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductReceiptDetail> ProductReceiptDetails { get; set; }
         public virtual DbSet<Promotion> Promotions { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<View_1> View_1 { get; set; }
-        public virtual DbSet<ProductReceiptDetail> ProductReceiptDetails { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -146,5 +146,7 @@ namespace ConstructionMS
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+
+        
     }
 }
