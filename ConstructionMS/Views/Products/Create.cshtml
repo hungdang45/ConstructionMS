@@ -508,22 +508,10 @@
 
                                                 @*Add Test upload image*@
 
-                                                @Html.LabelFor(model => model.ProductImage, new { @class = "control-label col-md-2" })
-                                                @*<div class="col-md-10">
-                        <input name="Image" type="file" />
-                        @Html.ValidationMessageFor(model => model.ProductImage)
-                    </div>*@
-
                                                 <div class="form-group">
                                                     @Html.LabelFor(model => model.ImageUpload, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <div class="col-md-10">
+                                                    <div class="col-md-5">
                                                         <input type="file" class="form-control" name="file" />
-
-                                                        @*@{
-                                                            var base64 = Convert.ToBase64String(model => model.ImageUpload);
-                                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                                        }*@
-                                                        
 
                                                         @Html.ValidationMessageFor(model => model.ImageUpload, "", new { @class = "text-danger" })
                                                     </div>

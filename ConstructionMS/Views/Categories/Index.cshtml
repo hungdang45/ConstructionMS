@@ -442,9 +442,17 @@
                                                     @*button Delete*@
                                                     @Html.ActionLink("Xóa", "Delete", new { id = item.CategoryID }, new { @class = "btn btn-danger" })
 
+                                                     @*button ref to Cat Type*@
+                                                    <a href="~/CategoryTypes/Create" class="btn btn-secondary btn-icon-split" style="float:right;">
+
+                                                        <span class="text">Tạo mới loại danh mục</span>
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </span>
+                                                    </a>
                                                     @*@Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
-                                                    @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
-                                                    @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })*@
+        @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })*@
                                                 </td>
                                             </tr>
                                         }

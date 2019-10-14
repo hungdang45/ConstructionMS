@@ -31,7 +31,6 @@ namespace ConstructionMS.Controllers
         private CMSEntities db = new CMSEntities();
 
        
-
         [HttpGet]       
         // GET: Products
         public ActionResult Index()
@@ -84,6 +83,19 @@ namespace ConstructionMS.Controllers
             CMSEntities entities = new CMSEntities();
             entities.Products.Add(new Product
             {
+                ProductID=product.ProductID,
+                ProductName=product.ProductName,
+                ProductCode = product.ProductCode,
+                Brand = product.Brand,
+                Size = product.Size,
+                Description = product.Description,
+                Price = product.Price,
+              
+                Quantity= product.Quantity,
+                Status=product.Status,
+                Height=product.Height,
+                CategoryTypeID=product.CategoryTypeID,
+                Material=product.Material,
                 ImageUpload = bytes
 
             });
@@ -111,7 +123,9 @@ namespace ConstructionMS.Controllers
                 file.InputStream.Read(product.ImageUpload, 0, file.ContentLength);
 
                 //db.Entry(product).State = EntityState.Modified;
-                db.Products.Add(product);
+
+                //Original add product code
+                //db.Products.Add(product);
                 //await db.SaveChangesAsync();
                 db.SaveChanges();
                 return RedirectToAction("Index");

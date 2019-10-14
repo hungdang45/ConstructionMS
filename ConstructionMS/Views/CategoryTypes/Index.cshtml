@@ -4,11 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <html lang="en">
 
 <head>
@@ -401,9 +401,20 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Hiển thị </h6>
                         </div>
-                        <p>
+                        @*<p>
                             @Html.ActionLink("Tạo mới loại danh mục sản phẩm", "Create")
-                        </p>
+                        </p>*@
+
+                        <div class="card-header py-3">
+                            @*<h6 class="m-0 font-weight-bold text-primary">Hiển thị </h6>*@
+                            <a href="~/CategoryTypes/Create" class="btn btn-secondary btn-icon-split" style="float:right;">
+
+                                <span class="text">Tạo mới loại danh mục sản phẩm</span>
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </a>
+                        </div>
 
                         <div class="card-body">
                             <div class="table-responsive">
@@ -432,20 +443,29 @@
                                                     @Html.ActionLink("Edit", "Edit", new { id = item.CategoryTypeID }) |
                                                     @Html.ActionLink("Details", "Details", new { id = item.CategoryTypeID }) |
                                                     @Html.ActionLink("Delete", "Delete", new { id = item.CategoryTypeID })
+
+                                                    @*button ref to Cat Type*@
+                                                    <a href="~/Products/Create" class="btn btn-secondary btn-icon-split" style="float:right;">
+
+                                                        <span class="text">Tạo mới sản phẩm</span>
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </span>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         }
                                     </thead>
                                     @*<tfoot>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </tfoot>*@
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>*@
 
                                 </table>
                             </div>

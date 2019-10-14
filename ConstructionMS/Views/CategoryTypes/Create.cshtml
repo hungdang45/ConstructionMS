@@ -4,15 +4,6 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -404,7 +395,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-primary">Thêm mới danh mục sản phẩm </h4>
+                            <h4 class="m-0 font-weight-bold text-primary">Thêm mới loại danh mục sản phẩm </h4>
                         </div>
 
 
@@ -429,17 +420,31 @@
 
                                         @using (Html.BeginForm())
                                         {
-                                            @Html.AntiForgeryToken()
+                                            @*@Html.AntiForgeryToken()*@
 
                                         <div class="form-horizontal">
-                                            <h4>Category</h4>
+                                            <h4>Thông tin chính</h4>
 
 
+                                            <a href="#" class="btn btn-success btn-icon-split" style="float:right;">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                                <input type="submit" value="Hoàn tất" class="btn btn-success " />
+                                            </a>
 
-                                            <div class="form-group">
+                                            <a href="~/CategoryTypes/Index" class="btn btn-secondary btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-arrow-left"></i>
+                                                </span>
+                                                <span class="text">Quay lại</span>
+                                            </a>
+
+
+                                            @*<div class="form-group">
                                                 <span>
                                                     <div class="col-md-offset-2 col-md-10">
-                                                        <input type="submit" value="Create" class="btn btn-default" />
+                                                        <input type="submit" value="Hoàn tất" class="btn btn-default" />
                                                     </div>
                                                 </span>
                                                 <span>
@@ -447,10 +452,7 @@
                                                         @Html.ActionLink("Back to List", "Index")
                                                     </div>
                                                 </span>
-
-
-
-                                            </div>
+                                            </div>*@
 
                                             <hr />
                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -478,11 +480,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <div class="col-md-offset-2 col-md-10">
-                                                            <input type="submit" value="Create" class="btn btn-default" />
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                             }
 
