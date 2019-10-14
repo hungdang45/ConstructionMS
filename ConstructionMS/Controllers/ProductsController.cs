@@ -30,11 +30,42 @@ namespace ConstructionMS.Controllers
     {
         private CMSEntities db = new CMSEntities();
 
-       
-        [HttpGet]       
+       //Original code
+
+        //[HttpGet]       
+        //// GET: Products
+        //public ActionResult Index()
+        //{
+        //    var products = db.Products.Include(p => p.CategoryType).Include(p => p.Manager);
+        //    return View(products.ToList());
+        //}
+
+         //Modify code for sorting fucntion
+        [HttpGet]
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+           
+            var product = from p in db.Products
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                product = product.Where(s => s.ProductName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    product = product.OrderByDescending(p => p.ProductName);
+                    break;
+                
+                default:
+                    product = product.OrderBy(p => p.ProductName);
+                    break;
+            }
+
             var products = db.Products.Include(p => p.CategoryType).Include(p => p.Manager);
             return View(products.ToList());
         }
@@ -114,6 +145,8 @@ namespace ConstructionMS.Controllers
                 file.SaveAs(path);
             }
 
+         
+
             if (ModelState.IsValid)
             {
                 // Converting to bytes.
@@ -141,6 +174,18 @@ namespace ConstructionMS.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
+            //Original code
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Product product = db.Products.Find(id);
+            //if (product == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            //Add Modyfy for Edit with image 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -150,6 +195,7 @@ namespace ConstructionMS.Controllers
             {
                 return HttpNotFound();
             }
+
             ViewBag.CategoryTypeID = new SelectList(db.CategoryTypes, "CategoryTypeID", "TypeName", product.CategoryTypeID);
             ViewBag.ManagerID = new SelectList(db.Managers, "ManagerID", "ManagerName", product.ManagerID);
             return View(product);
