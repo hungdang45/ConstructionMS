@@ -175,17 +175,6 @@ namespace ConstructionMS.Controllers
         public ActionResult Edit(int? id)
         {
             //Original code
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Product product = db.Products.Find(id);
-            //if (product == null)
-            //{
-            //    return HttpNotFound();
-            //}
-
-            //Add Modyfy for Edit with image 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -206,10 +195,26 @@ namespace ConstructionMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,ProductName,Brand,Size,Description,Price,ProductCode,ProductImage,Quantity,Status,Height,CategoryTypeID,ManagerID,Material")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,ProductName,Brand,Size,Description,Price,ProductCode,ProductImage,Quantity,Status,Height,CategoryTypeID,ManagerID,Material,ImageUpload")] Product product, HttpPostedFileBase file)
         {
+            //modifiy code 
+            byte[] bytes;
+            using (BinaryReader br = new BinaryReader(file.InputStream))
+            {
+                bytes = br.ReadBytes(file.ContentLength);
+            }
+            
+            //orginal code, revert in case error
             if (ModelState.IsValid)
             {
+                //modify code , delete when error
+                
+                //end modify 
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/Content/Uploads/") + file.FileName);
+                    product.ImageUpload = bytes;
+                }
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -235,7 +240,7 @@ namespace ConstructionMS.Controllers
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
-            return View(product);
+            //return View(product);
             
         }
 

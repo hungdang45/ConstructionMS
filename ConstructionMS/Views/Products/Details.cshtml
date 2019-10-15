@@ -499,13 +499,13 @@
 
                                                     @*Add image for detail*@
                                                     <dd>
-                                                        @Html.DisplayFor(model => model.ImageUpload)
-                                                        @if (item.ImageUpload != null)
+                                                        @*@Html.DisplayFor(model => model.ImageUpload)*@
+                                                        @if (Model.ImageUpload != null)
                                                         {
-                                                            var base64 = Convert.ToBase64String(item.ImageUpload);
-                                                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                            //var base64 = Convert.ToBase64String(Model.ImageUpload);
+                                                            //var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
 
-                                                            <img src="data:image;base64,@System.Convert.ToBase64String(item.ImageUpload)" alt="" width="150" height="125" />
+                                                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.ImageUpload)" alt="" width="150" height="125" />
                                                         }
                                                         else
                                                         {
