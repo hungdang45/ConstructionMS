@@ -43,29 +43,26 @@ namespace ConstructionMS.Controllers
          //Modify code for sorting fucntion
         [HttpGet]
         // GET: Products
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string option, string search)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-           
-            var product = from p in db.Products
-                           select p;
-
-            if (!String.IsNullOrEmpty(searchString))
+            //if a user choose the radio button option as Subject  
+            if (option == "ProductName")
             {
-                product = product.Where(s => s.ProductName.Contains(searchString));
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(db.Products.Where(x => x.ProductName == search || search == null).ToList());
             }
-
-            switch (sortOrder)
+            else if (option == "Brand")
             {
-                case "name_desc":
-                    product = product.OrderByDescending(p => p.ProductName);
-                    break;
-                
-                default:
-                    product = product.OrderBy(p => p.ProductName);
-                    break;
+                return View(db.Products.Where(x => x.Brand == search || search == null).ToList());
             }
-
+            else if (option == "Material")
+            {
+                return View(db.Products.Where(x => x.Material == search || search == null).ToList());
+            }
+            else if (option == null)
+            {
+                return View(db.Products.ToList());
+            }
             var products = db.Products.Include(p => p.CategoryType).Include(p => p.Manager);
             return View(products.ToList());
         }
@@ -106,13 +103,17 @@ namespace ConstructionMS.Controllers
             string fileContentType = string.Empty;
 
             byte[] bytes;
-            using (BinaryReader br = new BinaryReader(file.InputStream))
-            {
-                bytes = br.ReadBytes(file.ContentLength);
-            }
+         
 
             CMSEntities entities = new CMSEntities();
-            entities.Products.Add(new Product
+            if (ModelState.IsValid)
+            {
+                using (BinaryReader br = new BinaryReader(file.InputStream))
+                {
+                    bytes = br.ReadBytes(file.ContentLength);
+                }
+
+                entities.Products.Add(new Product
             {
                 ProductID=product.ProductID,
                 ProductName=product.ProductName,
@@ -147,8 +148,7 @@ namespace ConstructionMS.Controllers
 
          
 
-            if (ModelState.IsValid)
-            {
+          
                 // Converting to bytes.
                
                 product.ImageUpload = new byte[file.ContentLength];
