@@ -98,15 +98,10 @@ namespace ConstructionMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductID,ProductName,Brand,Size,Description,Price,ProductCode,Quantity,Status,Height,CategoryTypeID,ManagerID,Material,ProductImage,ImageUpload")] Product product, HttpPostedFileBase file)
-        {
-            string fileContent = string.Empty;
-            string fileContentType = string.Empty;
-
-            byte[] bytes;
-         
-
+        {          
+            byte[] bytes;        
             CMSEntities entities = new CMSEntities();
-            if (ModelState.IsValid)
+            try
             {
                 using (BinaryReader br = new BinaryReader(file.InputStream))
                 {
@@ -114,60 +109,54 @@ namespace ConstructionMS.Controllers
                 }
 
                 entities.Products.Add(new Product
-            {
-                ProductID=product.ProductID,
-                ProductName=product.ProductName,
-                ProductCode = product.ProductCode,
-                Brand = product.Brand,
-                Size = product.Size,
-                Description = product.Description,
-                Price = product.Price,
-              
-                Quantity= product.Quantity,
-                Status=product.Status,
-                Height=product.Height,
-                CategoryTypeID=product.CategoryTypeID,
-                Material=product.Material,
-                ImageUpload = bytes
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    ProductCode = product.ProductCode,
+                    Brand = product.Brand,
+                    Size = product.Size,
+                    Description = product.Description,
+                    Price = product.Price,
 
-            });
-            entities.SaveChanges();
+                    Quantity = product.Quantity,
+                    Status = product.Status,
+                    Height = product.Height,
+                    CategoryTypeID = product.CategoryTypeID,
+                    Material = product.Material,
+                    ImageUpload = bytes
 
-            if (file != null && file.ContentLength > 0)
-            {
-                
-                // extract only the fielname
-                var fileName = Path.GetFileName(file.FileName);
-                // store the file inside ~/App_Data/uploads folder
+                });
+                entities.SaveChanges();
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    // extract only the fielname
+                    var fileName = Path.GetFileName(file.FileName);
+                    // store the file inside ~/App_Data/uploads folder
+                    product.ImageUpload = new byte[file.ContentLength];
+                    file.InputStream.Read(product.ImageUpload, 0, file.ContentLength);
+                    var path = Path.Combine(Server.MapPath("~/Content/Uploads/"), fileName);
+                    file.SaveAs(path);
+                }
+                // Converting to bytes.               
                 product.ImageUpload = new byte[file.ContentLength];
                 file.InputStream.Read(product.ImageUpload, 0, file.ContentLength);
+                if (ModelState.IsValid)
+                {
 
-                var path = Path.Combine(Server.MapPath("~/Content/Uploads/"), fileName);
-                file.SaveAs(path);
-            }
-
+                    //db.Entry(product).State = EntityState.Modified;
+                    //Original add product code
+                    //db.Products.Add(product);
+                    //await db.SaveChangesAsync();
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            } catch (Exception ex) { Console.WriteLine(ex.StackTrace); }
          
-
-          
-                // Converting to bytes.
-               
-                product.ImageUpload = new byte[file.ContentLength];
-                
-                file.InputStream.Read(product.ImageUpload, 0, file.ContentLength);
-
-                //db.Entry(product).State = EntityState.Modified;
-
-                //Original add product code
-                //db.Products.Add(product);
-                //await db.SaveChangesAsync();
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
             ViewBag.CategoryTypeID = new SelectList(db.CategoryTypes, "CategoryTypeID", "TypeName", product.CategoryTypeID);
             ViewBag.ManagerID = new SelectList(db.Managers, "ManagerID", "ManagerName", product.ManagerID);
             return View(product);
-        }
+            }
 
 
 
@@ -199,26 +188,32 @@ namespace ConstructionMS.Controllers
         {
             //modifiy code 
             byte[] bytes;
-            using (BinaryReader br = new BinaryReader(file.InputStream))
+            try
             {
-                bytes = br.ReadBytes(file.ContentLength);
-            }
-            
-            //orginal code, revert in case error
-            if (ModelState.IsValid)
-            {
-                //modify code , delete when error
-                
-                //end modify 
-                if (file != null)
+                using (BinaryReader br = new BinaryReader(file.InputStream))
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("~/Content/Uploads/") + file.FileName);
-                    product.ImageUpload = bytes;
+                    bytes = br.ReadBytes(file.ContentLength);
                 }
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+
+                //orginal code, revert in case error
+                if (ModelState.IsValid)
+                {
+                    //modify code , delete when error
+
+                    //end modify 
+                    if (file != null)
+                    {
+                        file.SaveAs(HttpContext.Server.MapPath("~/Content/Uploads/") + file.FileName);
+                        product.ImageUpload = bytes;
+                    }
+                    db.Entry(product).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+               
+            } catch (Exception ex) { Console.WriteLine(ex.StackTrace); }
+
+
             ViewBag.CategoryTypeID = new SelectList(db.CategoryTypes, "CategoryTypeID", "TypeName", product.CategoryTypeID);
             ViewBag.ManagerID = new SelectList(db.Managers, "ManagerID", "ManagerName", product.ManagerID);
             return View(product);

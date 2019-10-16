@@ -436,8 +436,11 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            @*<th>
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>*@
                                             <th>
-                                                @Html.DisplayNameFor(model => model.ProductID)
+                                                @Html.DisplayNameFor(model => model.CategoryType)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.ProductImage)
@@ -445,7 +448,12 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.ProductName)
                                             </th>
-
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Brand)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Material)
+                                            </th>
                                             @*<th>
             @Html.DisplayNameFor(model => model.CategoryType)
         </th>*@
@@ -458,8 +466,8 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Status)
                                             </th>
-                                       
-                                           
+
+
                                             <th>
                                                 <center> Tùy chọn</center>
 
@@ -479,16 +487,18 @@
                                         @foreach (var item in Model)
                                         {
                                         <tr>
+                                            @*<td>
+            @Html.DisplayFor(modelItem => item.ProductID)
+        </td>*@
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ProductID)
+                                                @Html.DisplayFor(modelItem => item.CategoryType.TypeName)
                                             </td>
-
                                             <td>
                                                 @*@Html.DisplayFor(modelItem => item.ImageUpload)*@
                                                 @*@{
-            var base64 = Convert.ToBase64String(item.ImageUpload);
-            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
-        }*@
+                var base64 = Convert.ToBase64String(item.ImageUpload);
+                var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+            }*@
 
                                                 @*<img src="data:image;base64,@System.Convert.ToBase64String(item.ImageUpload)" alt="" width="150" height="125" />*@
 
@@ -496,7 +506,7 @@
                                                 {
                                                     var base64 = Convert.ToBase64String(item.ImageUpload);
                                                     var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                                  
+
                                                     <img src="data:image;base64,@System.Convert.ToBase64String(item.ImageUpload)" alt="" width="150" height="125" />
                                                 }
                                                 else
@@ -508,6 +518,12 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ProductName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Brand)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Material)
                                             </td>
                                             @*<td>
             @Html.DisplayFor(modelItem => item.CategoryType)
@@ -532,24 +548,22 @@
                                             <td>
                                                 @*button Edit*@
 
-                                                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ProductID }, new { @class = "btn btn-primary" }) |
-
+                                                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ProductID }, new { @class = "btn btn-primary", @style = "width:100px" })
+                                                <br> <br>
                                                 @*button Details*@
 
-                                                @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" }) |
+                                                @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "btn btn-info", @style = "width:100px" })
+                                                <br> <br>
 
                                                 @*button Delete*@
-                                                @Html.ActionLink("Xóa", "Delete", new { id = item.ProductID }, new { @class = "btn btn-danger" })
+                                                @Html.ActionLink("Xóa", "Delete", new { id = item.ProductID }, new { @class = "btn btn-danger", @style = "width:100px" })
 
-                                            <th>
-                                                @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })
-                                            </th>
 
-                                          
 
-                                            @*@Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |*@
-                                            @*<button onclick="@Url.Action("Edit", "Edit", new {id = item.ProductID })">Edit</button>*@
-                                            @*@Html.ActionLink("Details", "Details", new { id = item.ProductID }) |*@
+
+                                                @*@Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |*@
+                                                @*<button onclick="@Url.Action("Edit", "Edit", new {id = item.ProductID })">Edit</button>*@
+                                                @*@Html.ActionLink("Details", "Details", new { id = item.ProductID }) |*@
 
 
 

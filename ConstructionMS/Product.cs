@@ -42,8 +42,7 @@ namespace ConstructionMS
         public Nullable<int> CategoryTypeID { get; set; }
         public Nullable<int> ManagerID { get; set; }
         public string Material { get; set; }
-        public byte[] ProductImage { get; set; }
-        [Required]
+        public byte[] ProductImage { get; set; }        
         public byte[] ImageUpload { get; set; }
 
         public String Image { get; set; }
