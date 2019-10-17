@@ -25,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    
+
 
     <link href="/Content/admin/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -57,8 +57,8 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            
-            
+
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -343,7 +343,7 @@
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    
+
                     <p>
                         @Html.ActionLink("Create New", "Create")
                     </p>
@@ -374,9 +374,16 @@
                                     @Html.DisplayFor(modelItem => item.Manager.ManagerName)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.ReportID }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.ReportID }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.ReportID })
+                                    @*button Edit*@
+
+                                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ReportID }, new { @class = "btn btn-primary" }) |
+
+                                    @*button Details*@
+
+                                    @Html.ActionLink("Chi tiết", "Details", new { id = item.ReportID }, new { @class = "btn btn-info" }) |
+
+                                    @*button Delete*@
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.ReportID }, new { @class = "btn btn-danger" })
                                 </td>
                             </tr>
                         }
@@ -392,7 +399,7 @@
                     <!-- Content Row -->
                     <div class="row">
 
-                    
+
                     </div>
 
                     <!-- Content Row -->
@@ -403,13 +410,12 @@
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                              
                                 <!-- Card Body -->
-                               
+
                             </div>
                         </div>
 
-                      
+
                     </div>
 
                     <!-- Content Row -->
@@ -419,16 +425,14 @@
                         <div class="col-lg-6 mb-4">
 
                             <!-- Project Card Example -->
-                          
-
                             <!-- Color System -->
-                        
+
 
                         </div>
 
                         <div class="col-lg-6 mb-4">
 
-                         
+
 
                         </div>
                     </div>
@@ -479,31 +483,31 @@
 
     <!-- Bootstrap core JavaScript-->
     @*<script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
-    
-<script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
+
+    <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-<!-- Core plugin JavaScript-->
+    <!-- Core plugin JavaScript-->
     @*<script src="vendor/jquery-easing/jquery.easing.min.js"></script>*@
-    
+
     <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all pages-->
     @*<script src="js/sb-admin-2.min.js"></script>*@
-    
-<script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-@*<script src="vendor/chart.js/Chart.min.js"></script>*@
 
-<script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/chart.js/Chart.min.js"></script>
+    <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js"></script>
+    <!-- Page level plugins -->
+    @*<script src="vendor/chart.js/Chart.min.js"></script>*@
 
-<!-- Page level custom scripts -->
+    <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
     @*<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>*@
+        <script src="js/demo/chart-pie-demo.js"></script>*@
 
-<script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/js/demo/chart-area-demo.js"></script>
-<script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/js/demo/chart-pie-demo.js"></script>
+    <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/js/demo/chart-area-demo.js"></script>
+    <script src="/Content/admin/startbootstrap-sb-admin-2-gh-pages/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
